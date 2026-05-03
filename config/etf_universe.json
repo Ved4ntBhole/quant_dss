@@ -1,0 +1,28 @@
+{
+  "etfs": [
+    {"ticker": "LIQUIDBEES.NS", "name": "Nippon India ETF Liquid BeES", "category": "Liquid Fund", "risk_bucket": "Low"},
+    {"ticker": "ICICINIFTY.NS", "name": "ICICI Pru Nifty50 ETF", "category": "Large Cap Index", "risk_bucket": "Low"},
+    {"ticker": "GOLDBEES.NS", "name": "Nippon India ETF Gold BeES", "category": "Gold ETF", "risk_bucket": "Low"},
+    {"ticker": "SGOLD.NS", "name": "SBI Gold ETF", "category": "Gold ETF", "risk_bucket": "Low"},
+    {"ticker": "JUNIORBEES.NS", "name": "Nippon India ETF Junior BeES", "category": "Large Cap Index", "risk_bucket": "Low"},
+    {"ticker": "HDFCSENSEX.NS", "name": "HDFC Sensex ETF", "category": "Large Cap Index", "risk_bucket": "Low"},
+
+    {"ticker": "NIFTYBEES.NS", "name": "Nippon India ETF Nifty BeES", "category": "Large Cap Index", "risk_bucket": "Medium"},
+    {"ticker": "SETFNIF50.NS", "name": "SBI ETF Nifty 50", "category": "Large Cap Index", "risk_bucket": "Medium"},
+    {"ticker": "MOM100.NS", "name": "Mirae Asset NYSE FANG+ ETF", "category": "Global Tech", "risk_bucket": "Medium"},
+    {"ticker": "BANKBEES.NS", "name": "Nippon India ETF Bank BeES", "category": "Banking & Finance", "risk_bucket": "Medium"},
+    {"ticker": "PSUBNKIETF.NS", "name": "ICICI Pru PSU Bank ETF", "category": "Banking & Finance", "risk_bucket": "Medium"},
+    {"ticker": "ITBEES.NS", "name": "Nippon India ETF IT BeES", "category": "IT / Technology", "risk_bucket": "Medium"},
+    {"ticker": "MIDCAP.NS", "name": "Motilal Oswal Midcap 100 ETF", "category": "Mid Cap", "risk_bucket": "Medium"},
+    {"ticker": "NV20BEES.NS", "name": "Nippon India ETF NV20 BeES", "category": "Value Index", "risk_bucket": "Medium"},
+
+    {"ticker": "SMALLCAP.NS", "name": "Nippon India ETF Nifty Smallcap 250", "category": "Small Cap", "risk_bucket": "High"},
+    {"ticker": "MAFANG.NS", "name": "Mirae Asset NYSE FANG+ ETF (India)", "category": "Global Tech", "risk_bucket": "High"},
+    {"ticker": "PHARMABEES.NS", "name": "Nippon India ETF Pharma BeES", "category": "Pharma / Healthcare", "risk_bucket": "High"},
+    {"ticker": "INFRABEES.NS", "name": "Nippon India ETF Infra BeES", "category": "Infrastructure", "risk_bucket": "High"},
+    {"ticker": "ADANIGREEN.NS", "name": "Adani Green Energy Ltd", "category": "Renewable Energy", "risk_bucket": "High"},
+    {"ticker": "TATAMOTORS.NS", "name": "Tata Motors Ltd", "category": "Automobiles", "risk_bucket": "High"},
+    {"ticker": "VEDL.NS", "name": "Vedanta Ltd", "category": "Mining & Metals", "risk_bucket": "High"},
+    {"ticker": "ZEEL.NS", "name": "Zee Entertainment Enterprises Ltd", "category": "Media & Entertainment", "risk_bucket": "High"}
+  ]
+}

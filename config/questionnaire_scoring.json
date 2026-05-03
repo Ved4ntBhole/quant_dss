@@ -1,0 +1,26 @@
+{
+  "< 1 year": 0,
+  "1–3 years": 1,
+  "3–7 years": 2,
+  "7+ years": 3,
+
+  "Sell everything": 0,
+  "Sell some": 1,
+  "Hold": 2,
+  "Buy more": 3,
+
+  "Unstable": 0,
+  "Moderate": 1,
+  "Stable": 2,
+  "Very stable": 3,
+
+  "Preserve capital": 0,
+  "Steady income": 1,
+  "Balanced growth": 2,
+  "Maximise gains": 3,
+
+  "Beginner": 0,
+  "Some experience": 1,
+  "Experienced": 2,
+  "Professional": 3
+}

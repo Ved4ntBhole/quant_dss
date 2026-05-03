@@ -1,0 +1,39 @@
+{
+  "benchmark": "^NSEI",
+  "risk_free_rate": 0.065,
+  "trading_days_per_year": 252,
+  "minimum_return_observations": 60,
+  "minimum_training_observations": 120,
+  "volatility_threshold": 0.20,
+  "cv_folds": 5,
+  "test_size": 0.2,
+  "random_state": 42,
+  "top_n_recommendations": 5,
+  "questionnaire_score_bands": {
+    "Low": [0, 4],
+    "Medium": [5, 9],
+    "High": [10, 15]
+  },
+  "auto_label_score_bands": {
+    "Low": [0, 2],
+    "Medium": [3, 5],
+    "High": [6, 8]
+  },
+  "beta_thresholds": {
+    "low": 0.7,
+    "high": 1.3
+  },
+  "model": {
+    "type": "random_forest",
+    "n_estimators": 200,
+    "max_depth": 8,
+    "min_samples_leaf": 3,
+    "learning_rate": 0.05
+  },
+  "api": {
+    "alpha_vantage_timeout": 15,
+    "gemini_timeout": 30,
+    "gemini_temperature": 0.35,
+    "gemini_max_output_tokens": 900
+  }
+}

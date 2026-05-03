@@ -1,0 +1,49 @@
+{
+  "training_tickers": [
+
+    "RELIANCE.NS",
+    "TCS.NS",
+    "INFY.NS",
+    "SBIN.NS",
+    "HDFCBANK.NS",
+    "ICICIBANK.NS",
+    "AXISBANK.NS",
+    "ITC.NS",
+    "LT.NS",
+    "BHARTIARTL.NS",
+    "MARUTI.NS",
+    "SUNPHARMA.NS",
+    "ASIANPAINT.NS",
+    "BAJAJFINSV.NS",
+    "BAJFINANCE.NS",
+    "JSWSTEEL.NS",
+    "TATASTEEL.NS",
+    "ULTRACEMCO.NS",
+    "HCLTECH.NS",
+    "POWERGRID.NS",
+
+    "BEL.NS",
+    "JIOFIN.NS",
+    "ETERNAL.NS",
+    "TRENT.NS",
+    "ADANIENT.NS",
+    "ADANIPORTS.NS",
+    "APOLLOHOSP.NS",
+    "LTM.NS",
+    "SHRIRAMFIN.NS",
+    "MAXHEALTH.NS",
+
+    "ADANIENSOL.NS",
+    "TATAPOWER.NS",
+    "TATACONSUM.NS",
+    "TMCV.NS",
+    "VEDL.NS",
+    "NMDC.NS",
+    "ZEEL.NS",
+
+    "PSUBNKIETF.NS",
+    "BANKBEES.NS",
+    "GOLDBEES.NS",
+    "LIQUIDBEES.NS"
+  ]
+}
