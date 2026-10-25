@@ -1,8 +1,8 @@
-streamlit>=1.32.0
+streamlit>=1.39.0
 yfinance>=0.2.38
 pandas>=2.0.0
 numpy>=1.26.0
-scikit-learn>=1.4.0
+scikit-learn==1.5.1  # must match the version models/*.pkl were trained with
 matplotlib>=3.8.0
 plotly>=5.20.0
 joblib>=1.3.0

@@ -57,7 +57,7 @@ st.set_page_config(
     page_title="QuantDSS India",
     page_icon="📊",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
 # ── global CSS ────────────────────────────────────────────────────────────────
@@ -65,9 +65,34 @@ st.markdown("""
 <style>
 /* General */
 [data-testid="stAppViewContainer"] { background: #0a0e1a; }
-[data-testid="stSidebar"]          { background: #0d1117; border-right: 1px solid #1e2a3a; }
+[data-testid="stSidebar"],
+[data-testid="stSidebarCollapsedControl"],
+[data-testid="collapsedControl"]   { display: none; }
 h1,h2,h3,h4                        { color: #e2e8f0; }
 p, li, label, .stMarkdown           { color: #94a3b8; }
+
+/* Top navigation bar */
+.st-key-topnav {
+    background: #0d1117; border: 1px solid #1e2a3a; border-radius: 12px;
+    padding: 10px 18px; margin-bottom: 8px;
+}
+.nav-brand {
+    font-size: 1.2rem; font-weight: 800; color: #e2e8f0; white-space: nowrap;
+}
+.nav-brand small {
+    display: block; font-size: 0.7rem; font-weight: 500; color: #64748b;
+}
+.st-key-topnav [role="radiogroup"] { gap: 6px; flex-wrap: wrap; }
+.st-key-topnav [data-baseweb="radio"] {
+    padding: 6px 14px; margin: 0; border-radius: 8px;
+    border: 1px solid transparent; transition: background .15s;
+}
+.st-key-topnav [data-baseweb="radio"]:hover { background: #111827; }
+.st-key-topnav [data-baseweb="radio"]:has(input:checked) {
+    background: #1e293b; border-color: #3b82f6;
+}
+.st-key-topnav [data-baseweb="radio"]:has(input:checked) p { color: #f1f5f9; }
+.st-key-topnav [data-baseweb="radio"] > div:first-of-type { display: none; }
 
 /* Risk badge */
 .risk-badge {
@@ -197,84 +222,96 @@ def _get_model():
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-#  SIDEBAR
+#  TOP NAVIGATION BAR
 # ═══════════════════════════════════════════════════════════════════════════════
-with st.sidebar:
-    st.markdown("## 📊 QuantDSS India")
-    st.caption("Quant-Driven Investment Decision Support System")
-    st.divider()
+pipeline, le, model_err = _get_model()
+provider = _auto_provider()
 
-    page = st.radio(
-        "Navigation",
-        ["📝 Risk Questionnaire",
-         "🔍 Live Asset Analysis",
-         "💡 Recommendations",
-         "📄 Report"],
-        key="nav_page",
-    )
-    st.divider()
+gemini_key   = bool(os.getenv("GEMINI_API_KEY", "").strip())
+alpha_key    = bool(os.getenv("ALPHA_VANTAGE_API_KEY", "").strip())
+gemini_model = os.getenv("GEMINI_MODEL", "gemini-2.5-flash").strip()
 
-    # ── model status ──────────────────────────────────────────────────────────
-    pipeline, le, model_err = _get_model()
-    if model_err:
-        st.error("❌ Model not found — run `python train.py` first.")
-    else:
-        st.success("✅ ML Model loaded")
+with st.container(key="topnav"):
+    nav_brand, nav_menu, nav_status, nav_profile = st.columns(
+        [2.2, 6, 1.2, 1.4], vertical_alignment="center")
 
-    if env_loaded:
-        st.caption("✅ .env loaded")
+    with nav_brand:
+        st.markdown('<div class="nav-brand">📊 QuantDSS India'
+                    '<small>Quant-Driven Investment DSS</small></div>',
+                    unsafe_allow_html=True)
 
-    # ── provider status ───────────────────────────────────────────────────────
-    provider = _auto_provider()
-    st.markdown("### 🔌 Provider Status")
+    with nav_menu:
+        page = st.radio(
+            "Navigation",
+            ["📝 Risk Questionnaire",
+             "🔍 Live Asset Analysis",
+             "💡 Recommendations",
+             "📄 Report"],
+            key="nav_page",
+            horizontal=True,
+            label_visibility="collapsed",
+        )
 
-    gemini_key   = bool(os.getenv("GEMINI_API_KEY", "").strip())
-    alpha_key    = bool(os.getenv("ALPHA_VANTAGE_API_KEY", "").strip())
-    gemini_model = os.getenv("GEMINI_MODEL", "gemini-2.5-flash").strip()
+    # ── model / provider status ───────────────────────────────────────────────
+    with nav_status:
+        status_icon = "🔴" if model_err else ("🟢" if provider != "static" else "🟡")
+        with st.popover(f"{status_icon} Status", use_container_width=True):
+            if model_err:
+                st.error("❌ Model not found — run `python train.py` first.")
+            else:
+                st.success("✅ ML Model loaded")
 
-    if provider == "gemini":
-        st.success(f"🤖 Gemini AI active ({gemini_model})")
-    elif provider == "alpha_vantage":
-        st.info("📡 Alpha Vantage active")
-    else:
-        st.warning("⚠️ Static fallback — add API keys to .env")
+            if env_loaded:
+                st.caption("✅ .env loaded")
 
-    with st.expander("⚙️ Debug Info"):
-        st.json({
-            "provider"     : provider,
-            "gemini_key"   : gemini_key,
-            "gemini_model" : gemini_model,
-            "alpha_key"    : alpha_key,
-            "env_loaded"   : env_loaded,
-            "benchmark"    : _POLICY.get("benchmark", "^NSEI"),
-        })
+            st.markdown("**🔌 Provider Status**")
+            if provider == "gemini":
+                st.success(f"🤖 Gemini AI active ({gemini_model})")
+            elif provider == "alpha_vantage":
+                st.info("📡 Alpha Vantage active")
+            else:
+                st.warning("⚠️ Static fallback — add API keys to .env")
 
-    st.divider()
+            st.markdown("**⚙️ Debug Info**")
+            st.json({
+                "provider"     : provider,
+                "gemini_key"   : gemini_key,
+                "gemini_model" : gemini_model,
+                "alpha_key"    : alpha_key,
+                "env_loaded"   : env_loaded,
+                "benchmark"    : _POLICY.get("benchmark", "^NSEI"),
+            }, expanded=False)
+
+            st.divider()
+            st.caption(f"Benchmark: {BENCHMARK_NAME}")
+            st.caption("Price data: yfinance (NSE)")
+            st.caption("AI text: Gemini API")
+            st.caption(f"ML: RandomForest ({len(FEATURE_COLS)} features)")
+            st.caption(f"Session: {datetime.now().strftime('%d %b %Y')}")
 
     # ── user profile summary ──────────────────────────────────────────────────
-    if st.session_state.user_risk:
-        st.markdown("### 👤 Current Profile")
-        name = st.session_state.user_name or "Investor"
-        risk = st.session_state.user_risk
-        score = st.session_state.questionnaire_score
-        st.markdown(f"**{name}**")
-        st.markdown(_risk_badge_html(risk), unsafe_allow_html=True)
-        if score is not None:
-            st.caption(f"Questionnaire score: {score}/15")
-        if st.button("🔄 Reset Profile", use_container_width=True):
-            for k in ["user_name", "user_risk", "questionnaire_done",
-                      "questionnaire_score", "analysed_assets"]:
-                st.session_state[k] = "" if k == "user_name" else (
-                    None if k in ["user_risk", "questionnaire_score"] else
-                    False if k == "questionnaire_done" else [])
-            st.rerun()
+    with nav_profile:
+        if st.session_state.user_risk:
+            name = st.session_state.user_name or "Investor"
+            risk = st.session_state.user_risk
+            score = st.session_state.questionnaire_score
+            with st.popover(f"👤 {name}", use_container_width=True):
+                st.markdown("**👤 Current Profile**")
+                st.markdown(_risk_badge_html(risk), unsafe_allow_html=True)
+                if score is not None:
+                    st.caption(f"Questionnaire score: {score}/15")
+                if st.button("🔄 Reset Profile", use_container_width=True):
+                    for k in ["user_name", "user_risk", "questionnaire_done",
+                              "questionnaire_score", "analysed_assets"]:
+                        st.session_state[k] = "" if k == "user_name" else (
+                            None if k in ["user_risk", "questionnaire_score"] else
+                            False if k == "questionnaire_done" else [])
+                    st.rerun()
+        else:
+            st.caption("👤 No profile yet")
 
-    st.divider()
-    st.caption(f"Benchmark: {BENCHMARK_NAME}")
-    st.caption("Price data: yfinance (NSE)")
-    st.caption("AI text: Gemini API")
-    st.caption(f"ML: RandomForest ({len(FEATURE_COLS)} features)")
-    st.caption(f"Session: {datetime.now().strftime('%d %b %Y')}")
+if model_err:
+    st.error("❌ ML model not found — run `python train.py` first.")
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -390,7 +427,7 @@ if page == "📝 Risk Questionnaire":
             unsafe_allow_html=True,
         )
 
-        st.markdown("**Next step →** Go to **🔍 Live Asset Analysis** or **💡 Recommendations** in the sidebar.")
+        st.markdown("**Next step →** Go to **🔍 Live Asset Analysis** or **💡 Recommendations** in the top menu.")
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
